@@ -10,7 +10,6 @@ struct Node
 
 		Node(int iIn) : i(iIn), pLeft(nullptr), pRight(nullptr){}
 };
-
 void InsertToTree(Node*& pRoot, Node* pNew)
 {
 	if (!pRoot)
@@ -37,7 +36,72 @@ void PrintTree(Node* pRoot, int Level)
 
 	PrintTree(pRoot->pLeft, Level + 1);
 }
+bool printPath(Node* pRoot, int sum)
+{
+	
+	if (sum == 0) {
+		return true;
+	}
+
+	
+	if (pRoot == nullptr) {
+		return false;
+	}
+	bool left = printPath(pRoot->pLeft, sum - pRoot->i);
+	bool right = printPath(pRoot->pRight, sum - pRoot->i);
+	if (left || right) {
+		cout << pRoot->i << " ";
+	}
+
+	return left || right;
+}
+int TotalSum(Node* pRoot)
+{
+	
+	if (pRoot == nullptr) {
+		return 0;
+	}
+
+	int left = TotalSum(pRoot->pLeft);
+
+	int right = TotalSum(pRoot->pRight);
+	
+	return (left > right ? left : right) + pRoot->i;
+}
+
+
+void Answer(Node* pRoot)
+{
+	int sum = TotalSum(pRoot);
+	cout << "Largest Branch is= " << sum << endl;
+}
 
 void main()
-{
+	{
+		Node* pRoot = nullptr;
+		/* Question tree
+
+			  5
+			 / \
+			4   8
+		   /   / \
+		  11  13  4
+		 /  \      \
+		7    2      1
+		*/
+
+		pRoot = new Node(5);
+		pRoot->pLeft = new Node(4);
+		pRoot->pRight = new Node(8);
+		pRoot->pLeft->pLeft = new Node(11);
+		pRoot->pRight->pLeft = new Node(13);
+		pRoot->pRight->pRight = new Node(4);
+		pRoot->pLeft->pLeft->pLeft = new Node(7);
+		pRoot->pLeft->pLeft->pRight = new Node(2);
+		pRoot->pRight->pRight->pRight = new Node(1);
+
+
+		Answer(pRoot);
+
+		
 }
