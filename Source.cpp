@@ -36,10 +36,10 @@ void PrintTree(Node* pRoot, int Level)
 
 	PrintTree(pRoot->pLeft, Level + 1);
 }
-bool printPath(Node* pRoot, int sum)
+bool Findingtheway(Node* pRoot, int j)
 {
 	
-	if (sum == 0) {
+	if (j == 0) {
 		return true;
 	}
 
@@ -47,8 +47,8 @@ bool printPath(Node* pRoot, int sum)
 	if (pRoot == nullptr) {
 		return false;
 	}
-	bool left = printPath(pRoot->pLeft, sum - pRoot->i);
-	bool right = printPath(pRoot->pRight, sum - pRoot->i);
+	bool left = Findingtheway(pRoot->pLeft, j- pRoot->i);
+	bool right = Findingtheway(pRoot->pRight, j - pRoot->i);
 	if (left || right) {
 		cout << pRoot->i << " ";
 	}
